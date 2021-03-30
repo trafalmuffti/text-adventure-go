@@ -30,14 +30,15 @@ func (g *Game) Play() {
 		for i < 1 || i > len(locationMap[g.CurrentLocation].Transitions) {
 			fmt.Printf("%s%d%s\n", "Where do you want to go (0 - to quit), [1...", len(locationMap[g.CurrentLocation].Transitions), "]: ")
 			fmt.Scan(&i)
+		if i == 0	{
+	goto exithere
+			}
 		}
 		newLoc := i - 1
-		if newLoc == -1	{
-//exit somehow
-		}
 		g.CurrentLocation = locationMap[g.CurrentLocation].Transitions[newLoc]
 
 	}
+	exithere:
 }
 
 func (g *Game) ProcessEvents(events []string) {
@@ -94,6 +95,7 @@ var locationMap = map[string]*Location{
 }
 
 func main() {
+	defer fmt.Println("Exiting...")
 	g := &Game{Health: 100, Welcome: "Welcome to the Starship Enterprise\n\n", CurrentLocation: "Bridge"}
 	g.Play()
 
