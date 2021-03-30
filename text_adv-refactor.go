@@ -32,6 +32,9 @@ func (g *Game) Play() {
 			fmt.Scan(&i)
 		}
 		newLoc := i - 1
+		if newLoc == -1	{
+//exit somehow
+		}
 		g.CurrentLocation = locationMap[g.CurrentLocation].Transitions[newLoc]
 
 	}
@@ -84,7 +87,8 @@ var evts = map[string]*Event{
 var locationMap = map[string]*Location{
 	"Bridge":      {"You are on the bridge of a spaceship sitting in the Captain's chair.", []string{"Ready Room", "Turbo Lift"}, []string{"alienAttack"}},
 	"Ready Room":  {"The Captain's ready room.", []string{"Bridge"}, []string{}},
-	"Turbo Lift":  {"A Turbo Lift that takes you anywhere in the ship.", []string{"Bridge", "Lounge", "Engineering"}, []string{"android"}},
+	"Turbo Lift":  {"A Turbo Lift that takes you anywhere in the ship.", []string{"Bridge", "Lounge", "Sickbay", "Engineering"}, []string{"android"}},
+	"Sickbay":     {"The sickbay is usually empty...", []string{"Turbo Lift"}, []string{"doctorTreatment"}},
 	"Engineering": {"You are in engineering where you see the star drive", []string{"Turbo Lift"}, []string{"alienAttack"}},
 	"Lounge":      {"You are in the lounge, you feel very relaxed", []string{"Turbo Lift"}, []string{"relaxing"}},
 }
@@ -92,4 +96,5 @@ var locationMap = map[string]*Location{
 func main() {
 	g := &Game{Health: 100, Welcome: "Welcome to the Starship Enterprise\n\n", CurrentLocation: "Bridge"}
 	g.Play()
+
 }
