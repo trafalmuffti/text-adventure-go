@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"math/rand"
 	"time"
+	o "os"
 )
 
 type Game struct {
@@ -30,7 +31,7 @@ func (g *Game) Play() {
 			fmt.Scan(&i)
 		if i == 0	{
 		fmt.Println("Exiting...")
-		return
+		o.Exit(0)
 			}
 		}
 		newLoc := i - 1
@@ -77,7 +78,7 @@ type Location struct {
 
 var evts = map[string]*Event{
 	"alienAttack":     {Type: "Combat", Chance: 20, Description: "An alien beams in front of you and shoots you with a ray gun.", Health: -50, Evt: "doctorTreatment"},
-	"doctorTreatment": {Type: "Story", Chance: 10, Description: "The doctor rushes in and inject you with a health boost.", Health: +30, Evt: ""},
+	"doctorTreatment": {Type: "Story", Chance: 20, Description: "The doctor rushes in and inject you with a health boost.", Health: +30, Evt: ""},
 	"android":         {Type: "Story", Chance: 50, Description: "Data is in the turbo lift and says hi to you", Health: 0, Evt: ""},
 	"relaxing":        {Type: "Story", Chance: 100, Description: "In the lounge you are so relaxed that your health improves.", Health: +10, Evt: ""},
 }
