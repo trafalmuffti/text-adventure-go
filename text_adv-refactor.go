@@ -7,13 +7,11 @@ import (
 )
 
 type Game struct {
-	Welcome         string
 	Health          int
 	CurrentLocation *Location
 }
 
 func (g *Game) Play() {
-	fmt.Println(g.Welcome)
 	for {
 		fmt.Println(g.CurrentLocation.Description)
 		g.ProcessEvents(g.CurrentLocation.Events)
@@ -94,9 +92,9 @@ var locationMap = map[string]*Location{
 }
 
 func main() {
+	fmt.Println("Welcome to the Starship Enterprise\n")
 	g := &Game{
 		Health:          100,
-		Welcome:         "Welcome to the Starship Enterprise\n\n",
 		CurrentLocation: locationMap["Bridge"],
 	}
 	g.Play()
