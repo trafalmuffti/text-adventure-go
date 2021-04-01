@@ -9,26 +9,26 @@ import (
 type Game struct {
 	Welcome         string
 	Health          int
-	CurrentLocation string
+	CurrentLocation *Location
 }
 
 func (g *Game) Play() {
 	fmt.Println(g.Welcome)
 	for {
-		fmt.Println(locationMap[g.CurrentLocation].Description)
-		g.ProcessEvents(locationMap[g.CurrentLocation].Events)
+		fmt.Println(g.CurrentLocation.Description)
+		g.ProcessEvents(g.CurrentLocation.Events)
 		if g.Health <= 0 {
 			fmt.Println("You are dead, game over!!!")
 			return
 		}
 		fmt.Printf("Health: %d\n", g.Health)
 		fmt.Println("You can go to these places:")
-		for index, loc := range locationMap[g.CurrentLocation].Transitions {
+		for index, loc := range g.CurrentLocation.Transitions {
 			fmt.Printf("\t%d - %s\n", index+1, loc)
 		}
 		i := 0
-		for i < 1 || i > len(locationMap[g.CurrentLocation].Transitions) {
-			fmt.Printf("%s%d%s\n", "Where do you want to go (0 - to quit), [1...", len(locationMap[g.CurrentLocation].Transitions), "]: ")
+		for i < 1 || i > len(g.CurrentLocation.Transitions) {
+			fmt.Printf("%s%d%s\n", "Where do you want to go (0 - to quit), [1...", len(g.CurrentLocation.Transitions), "]: ")
 			fmt.Scan(&i)
 		if i == 0	{
 		fmt.Println("Exiting...")
@@ -36,8 +36,7 @@ func (g *Game) Play() {
 			}
 		}
 		newLoc := i - 1
-		g.CurrentLocation = locationMap[g.CurrentLocation].Transitions[newLoc]
-
+		g.CurrentLocation = locationMap[g.CurrentLocation.Transitions[newLoc]]
 	}
 }
 
@@ -95,7 +94,11 @@ var locationMap = map[string]*Location{
 }
 
 func main() {
-	g := &Game{Health: 100, Welcome: "Welcome to the Starship Enterprise\n\n", CurrentLocation: "Bridge"}
+	g := &Game{
+		Health:          100,
+		Welcome:         "Welcome to the Starship Enterprise\n\n",
+		CurrentLocation: locationMap["Bridge"],
+	}
 	g.Play()
 
 }
